@@ -1,0 +1,23 @@
+#Using alpine for base image
+FROM alpine:3.10
+
+#Installing necessary packages
+RUN apk update && apk add python3 uwsgi
+#Copying requirement file which is having module names used by python
+COPY ./requirements.txt /project/requirements.txt
+#Installing modules using pip command
+RUN pip3 install -r /project/requirements.txt
+#Removing Unecessary files
+RUN rm /etc/nginx/conf.d/default.conf &&  rm -r /root/.cache
+#Copying configuration file
+COPY nginx.conf /etc/nginx/ 
+COPY flask-site-nginx.conf /etc/nginx/conf.d/
+COPY uwsgi.ini /project
+COPY supervisord.conf /etc/
+COPY server.py /project
+#Chosing /project as default directory
+WORKDIR /project
+#Exposing image on 80 port
+EXPOSE 80
+#Running supervisiond which will run all program at once
+CMD ["/usr/bin/supervisord"]

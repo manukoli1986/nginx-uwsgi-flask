@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-uwsgi-nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: manukoli1986/alpine_nginx:v1
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/usr/sbin/nginx","-s","quit"]
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        VolumeMounts:
+          - name: helloworld-run
+            mountPath: /var/run/helloworld
+          - name: nginx-conf
+            mountPath: /etc/nginx/conf.d
+      - name: helloworld
+        image: grc.io/hightowerlabs/helloworld:1.0.0
+        workingDir: /app
+        command: ["/usr/local/bin/uwsgi"]
+        args:
+          - "--die-on-term"
+          - "--manage-script-name"
+          - "--mount=/=app:app"
+          - "--socket=/var/run/helloworld/uwsgi.sock"
+          - "--chmod-socket=666"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        VolumeMounts:
+          - name: helloworld-run
+            mountPath: /var/run/helloworld
+
+    volumes:
+      - name: helloworld-run
+        emptyDir: {}
+      - name: nginx-conf
+        configMap:
+          name: helloworld
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30180
+
