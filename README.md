@@ -228,8 +228,8 @@ $ minikube.exe service list
 |-------------|------------|-----------------------------|
 
 
-![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/images/1.jpg)
-![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/images/2.jpg)
+![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/blob/master/images/1.jpg)
+![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/blob/master/images/2.jpg)
 
 ## Conclusion
 
