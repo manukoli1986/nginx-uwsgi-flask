@@ -218,15 +218,9 @@ spec:
 ```
 
 # Output
-$ minikube.exe service list
-|-------------|------------|-----------------------------|
-|  NAMESPACE  |    NAME    |             URL             |
-|-------------|------------|-----------------------------|
-| default     | kubernetes | No node port                |
-| default     | nginx      | http://192.168.99.104:30180 |
-| kube-system | kube-dns   | No node port                |
-|-------------|------------|-----------------------------|
+$ minikube.exe service nginx --url
 
+http://192.168.99.104:30180
 
 ![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/blob/master/images/1.jpg)
 ![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/blob/master/images/2.jpg)
