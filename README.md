@@ -1,7 +1,7 @@
 # Serve Flask Applications with uWSGI and Nginx 
 =====
 
-> In this guide, you will build a Python application using the Flask microframework on alpine. The bulk of this article will be about how to set up the uWSGI application server and how to launch the application and configure Nginx to act as a front-end reverse proxy.
+> In this guide, you will build a Python application using the Flask microframework on alpine. The bulk of this article will be about how to set up the uWSGI application server and how to launch the application and configure Nginx to act as a front-end reverse proxy which is provisioned on K8(minikube).
 
 How this thing works
 -----
@@ -218,8 +218,18 @@ spec:
 ```
 
 # Output
-![alt text](https://github.com/manukoli1986/python-flaskapp/blob/master/images/curl.jpg)
+$ minikube.exe service list
+|-------------|------------|-----------------------------|
+|  NAMESPACE  |    NAME    |             URL             |
+|-------------|------------|-----------------------------|
+| default     | kubernetes | No node port                |
+| default     | nginx      | http://192.168.99.104:30180 |
+| kube-system | kube-dns   | No node port                |
+|-------------|------------|-----------------------------|
 
+
+![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/images/1.jpg)
+![alt text](https://github.com/manukoli1986/nginx-uwsgi-flask/images/2.jpg)
 
 ## Conclusion
 
