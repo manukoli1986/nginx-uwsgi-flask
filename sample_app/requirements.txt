@@ -1,4 +1,4 @@
 Flask
 Jinja2
 Werkzeug
-uwsgi==2.0.18
+uwsgi==2.0.22
